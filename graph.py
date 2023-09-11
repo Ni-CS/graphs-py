@@ -68,18 +68,58 @@ class Graph:
         for path in self.edges:
             print(path.get_path_info())
 
-    def sort_edges(self):
-        path_list = self.edges[:]
+    def encontrar_pai(self, pai, dept):
+        if pai[dept] == dept:
+            return dept
+        return self.encontrar_pai(pai, pai[dept])
 
-        path_list.sort(key=attrgetter('dist'))
-        return path_list
+    def kruskal(self):
+        self.edges.sort(key=lambda x: x.dist)  # Ordena as arestas por peso
+        pai = {}
+        arvore_minima = []
 
-    def kruskal_algorithm(self, deps, paths):
+        for dept in self.departments:
+            pai[dept] = dept
 
-        mst = Graph()
+        for edge in self.edges:
+            origem_pai = self.encontrar_pai(pai, edge.dept1)
+            destino_pai = self.encontrar_pai(pai, edge.dept2)
 
-        edgelist = self.sort_edges()
-        for edge in edgelist:
-            print("Adicionando caminho na MST", edge.get_path_info())
+            if origem_pai != destino_pai:
+                arvore_minima.append(edge)
+                pai[origem_pai] = destino_pai
 
-        return mst
+        return arvore_minima
+
+    def gerar_relatorio(self):
+        arvore_minima = self.kruskal()
+        distancia_total = 0
+        departamentos = []
+        for edge in arvore_minima:
+            distancia_total += edge.dist
+            if not (departamentos.__contains__(edge.dept1)):
+                departamentos.append(edge.dept1)
+            if not (departamentos.__contains__(edge.dept2)):
+                departamentos.append(edge.dept2)
+        quantia_pessoas = 0
+        for dept in departamentos:
+            quantia_pessoas += dept.people_amount
+        print("O custo total do projeto com {}m é R${} e impactou {} pessoas".format(distancia_total, distancia_total*1.80, quantia_pessoas))
+
+    def imprimir_arvore_minima(self):
+        arvore_minima = self.kruskal()
+        print('')
+
+        if not arvore_minima:
+            print("A árvore geradora mínima não foi criada ou é vazia.")
+            print(' ')
+            return
+
+        print("Árvore Geradora Mínima:")
+        for edge in arvore_minima:
+            origem = edge.dept1.name
+            destino = edge.dept2.name
+            distancia = edge.dist
+            print("{} <-----{}-----> {}".format(origem, distancia, destino))
+
+            print('')

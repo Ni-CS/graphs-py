@@ -71,8 +71,8 @@ if resp == 2:
                     dep = graph.find_dept_by_name(nome)
                     graph.print_department(dep)
         if menu == 2:
-            while op != 3:
-                print("\n1-Adicionar Caminho\n2- Remover Caminho\n3- Voltar")
+            while op != 4:
+                print("\n1-Adicionar Caminho\n2- Remover Caminho\n3- Ver Caminhos\n4- Voltar")
                 op = int(input())
                 if op == 1:
                     print("\nDigite o nome do Departamento de origem: ")
@@ -92,10 +92,12 @@ if resp == 2:
                     print("\nDigite a distância de um departamento a outro: ")
                     dist = int(input())
                     graph.remove_edge(graph.find_dept_by_name(nomeDep1), graph.find_dept_by_name(nomeDep2), dist)
+                if op == 3:
+                    graph.print_paths()
         if menu == 3:
-            pass  # arvore minima (Kruskal)
+            graph.imprimir_arvore_minima()
         if menu == 4:
-            pass # relatorio custo e pessoas impactadas
+            graph.gerar_relatorio()
         if menu == 5:
             graph.print_graph()
 
@@ -132,8 +134,8 @@ if resp == 1:
                     dep = graph.find_dept_by_name(nome)
                     graph.print_department(dep)
         if menu == 2:
-            while op != 3:
-                print("\n1-Adicionar Caminho\n2- Remover Caminho\n3- Voltar")
+            while op != 4:
+                print("\n1-Adicionar Caminho\n2- Remover Caminho\n3- Ver Caminhos\n4- Voltar")
                 op = int(input())
                 if op == 1:
                     print("\nDigite o nome do Departamento de origem: ")
@@ -153,9 +155,11 @@ if resp == 1:
                     print("\nDigite a distância de um departamento a outro: ")
                     dist = int(input())
                     graph.remove_edge(graph.find_dept_by_name(nomeDep1), graph.find_dept_by_name(nomeDep2), dist)
+                if op == 3:
+                    graph.print_paths()
         if menu == 3:
-            pass  # arvore minima (Kruskal)
+            graph.imprimir_arvore_minima()
         if menu == 4:
-            pass  # relatorio custo e pessoas impactadas
+            graph.gerar_relatorio()
         if menu == 5:
             graph.print_graph()
