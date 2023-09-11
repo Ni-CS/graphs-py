@@ -34,8 +34,8 @@ class Graph:
         self.departments.remove(dep)
 
     def remove_edge(self, dep1, dep2, dist):
-        self.adjacencylist[dep1].remove(dep2)
-        self.adjacencylist[dep2].remove(dep1)
+        self.adjacencylist[dep1.id].remove(dep2)
+        self.adjacencylist[dep2.id].remove(dep1)
         edge = self.find_edge(dep1, dep2, dist)
         self.edges.remove(edge)
 
