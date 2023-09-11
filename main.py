@@ -39,11 +39,11 @@ if resp == 2:
     graph.print_graph()
 
     menu = -1
-    while menu != 6:
+    while menu != 8:
         print("\n===========Este é o Grafo Pré-definido=============")
         print("\n====================Operações=====================")
         print("\n1-Gerenciar Departamentos\n2-Gerenciar Caminhos\n3-Ver Árvore Geradora Mínima\n4-Ver Relatório\n5- Ver"
-              "Grafo\n6- Sair")
+              "Grafo\n6- Ver Grafo com Interface\n7- Ver Árvore Geradora Mínima com Interface\n8- Sair")
         menu = int(input())
         op = -1
         if menu == 1:
@@ -100,13 +100,17 @@ if resp == 2:
             graph.gerar_relatorio()
         if menu == 5:
             graph.print_graph()
+        if menu == 6:
+            graph.interface_grafica_grafo()
+        if menu == 7:
+            graph.interface_grafica_arvoreminima()
 
 if resp == 1:
     menu = -1
-    while menu != 6:
+    while menu != 8:
         print("\n====================Operações=====================")
         print("\n1-Gerenciar Departamentos\n2-Gerenciar Caminhos\n3-Ver Árvore Geradora Mínima\n4-Ver Relatório\n5- Ver"
-              "Grafo\n6- Sair")
+              "Grafo\n6- Ver Grafo com Interface\n7- Ver Árvore Geradora Mínima com Interface\n8- Sair")
         menu = int(input())
         op = -1
         if menu == 1:
@@ -163,3 +167,7 @@ if resp == 1:
             graph.gerar_relatorio()
         if menu == 5:
             graph.print_graph()
+        if menu == 6:
+            graph.interface_grafica_grafo()
+        if menu == 7:
+            graph.interface_grafica_arvoreminima()

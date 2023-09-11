@@ -1,4 +1,6 @@
 from operator import attrgetter
+import matplotlib.pyplot as plt
+import networkx as nx
 
 
 class Graph:
@@ -104,7 +106,9 @@ class Graph:
         quantia_pessoas = 0
         for dept in departamentos:
             quantia_pessoas += dept.people_amount
-        print("O custo total do projeto com {}m é R${} e impactou {} pessoas".format(distancia_total, distancia_total*1.80, quantia_pessoas))
+        print("O custo total do projeto com {}m é R${} e impactou {} pessoas".format(distancia_total,
+                                                                                     distancia_total * 1.80,
+                                                                                     quantia_pessoas))
 
     def imprimir_arvore_minima(self):
         arvore_minima = self.kruskal()
@@ -123,3 +127,28 @@ class Graph:
             print("{} <-----{}-----> {}".format(origem, distancia, destino))
 
             print('')
+
+    def interface_grafica_grafo(self):
+        grafo=nx.Graph()
+        for dept in self.departments:
+            grafo.add_node(dept.name)
+        for edge in self.edges:
+            grafo.add_edge(edge.dept1.name, edge.dept2.name)
+
+        nx.draw(grafo, with_labels=True, node_color="red", node_size=5000, font_color="white", font_family="Times New "
+                                                                                                           "Roman", font_weight="bold")
+        plt.margins(0.2)
+        plt.show()
+
+    def interface_grafica_arvoreminima(self):
+        grafo=nx.Graph()
+        arvore_minima = self.kruskal()
+        for dept in self.departments:
+            grafo.add_node(dept.name)
+        for edge in arvore_minima:
+            grafo.add_edge(edge.dept1.name, edge.dept2.name)
+
+        nx.draw(grafo, with_labels=True, node_color="green", node_size=5000, font_color="black", font_family="Times New "
+                                                                                                           "Roman", font_weight="bold")
+        plt.margins(0.2)
+        plt.show()
