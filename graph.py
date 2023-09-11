@@ -129,26 +129,69 @@ class Graph:
             print('')
 
     def interface_grafica_grafo(self):
-        grafo=nx.Graph()
-        for dept in self.departments:
-            grafo.add_node(dept.name)
-        for edge in self.edges:
-            grafo.add_edge(edge.dept1.name, edge.dept2.name)
+        G = nx.Graph()
 
-        nx.draw(grafo, with_labels=True, node_color="red", node_size=5000, font_color="white", font_family="Times New "
-                                                                                                           "Roman", font_weight="bold")
+        for edge in self.edges:
+            G.add_edge(edge.dept1.name, edge.dept2.name, weight=int(edge.dist))
+
+        elarge = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] > 0.5]
+        esmall = [(u, v) for (u, v, d) in G.edges(data=True) if d["weight"] <= 0.5]
+
+        pos = nx.spring_layout(G, seed=6)
+
+        # nodes
+        nx.draw_networkx_nodes(G, pos, node_size=800, node_color="green")
+
+        # edges
+        nx.draw_networkx_edges(G, pos, edgelist=elarge, width=2)
+        nx.draw_networkx_edges(
+            G, pos, edgelist=esmall, width=2, alpha=0.5, edge_color="black", style="dashed"
+        )
+
+        # node labels
+        nx.draw_networkx_labels(G, pos, font_size=10, font_family="sans-serif", font_weight="bold")
+        # edge weight labels
+        edge_labels = nx.get_edge_attributes(G, "weight")
+        nx.draw_networkx_edge_labels(G, pos, edge_labels)
+
+        ax = plt.gca()
+        ax.margins(0.08)
+        plt.axis("off")
         plt.margins(0.2)
+        plt.tight_layout()
         plt.show()
 
     def interface_grafica_arvoreminima(self):
-        grafo=nx.Graph()
-        arvore_minima = self.kruskal()
-        for dept in self.departments:
-            grafo.add_node(dept.name)
-        for edge in arvore_minima:
-            grafo.add_edge(edge.dept1.name, edge.dept2.name)
+        grafo = nx.Graph()
 
-        nx.draw(grafo, with_labels=True, node_color="green", node_size=5000, font_color="black", font_family="Times New "
-                                                                                                           "Roman", font_weight="bold")
+        edges = self.kruskal()
+
+        for edge in edges:
+            grafo.add_edge(edge.dept1.name, edge.dept2.name, weight=int(edge.dist))
+
+        elarge = [(u, v) for (u, v, d) in grafo.edges(data=True) if d["weight"] > 0.5]
+        esmall = [(u, v) for (u, v, d) in grafo.edges(data=True) if d["weight"] <= 0.5]
+
+        pos = nx.spring_layout(grafo, seed=5)
+
+        # nodes
+        nx.draw_networkx_nodes(grafo, pos, node_size=800, node_color="green")
+
+        # edges
+        nx.draw_networkx_edges(grafo, pos, edgelist=elarge, width=2)
+        nx.draw_networkx_edges(
+            grafo, pos, edgelist=esmall, width=2, alpha=0.5, edge_color="black", style="dashed"
+        )
+
+        # node labels
+        nx.draw_networkx_labels(grafo, pos, font_size=10, font_family="sans-serif", font_weight="bold")
+        # edge weight labels
+        edge_labels = nx.get_edge_attributes(grafo, "weight")
+        nx.draw_networkx_edge_labels(grafo, pos, edge_labels)
+
+        ax = plt.gca()
+        ax.margins(0.08)
+        plt.axis("off")
         plt.margins(0.2)
+        plt.tight_layout()
         plt.show()
