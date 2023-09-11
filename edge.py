@@ -10,3 +10,9 @@ class Edge:
 
     def get_path_info(self):
         return "Caminho: {} <-----{}-----> {}".format(self.dept1.name, self.dist, self.dept2.name)
+
+    def get_dept1(self):
+        return self.dept1
+
+    def get_dept2(self):
+        return self.dept2
